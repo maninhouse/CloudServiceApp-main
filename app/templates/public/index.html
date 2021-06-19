@@ -1,0 +1,52 @@
+{% extends "public/templates/public_template.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block main %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Home</h1>
+        </div>
+    </div>
+</div>
+
+<p>{{message}}</p>
+<form action="/" method="post">
+<p>
+<label>請選擇圖片：</label>
+<input type="file" id="file_input" name="file_input" accept="image/jpeg, image/png"/>
+<button type="submit">確認</button>
+</p>
+<div id="result"></div>
+</form>
+<script language="javascript">
+
+var result = document.getElementById("result");
+var input = document.getElementById("file_input");
+
+if(typeof FileReader==='undefined'){
+result.innerHTML = "Sorry, 瀏覽器不支持 FileReader";
+input.setAttribute('disabled','disabled');
+}else{
+input.addEventListener('change',readFile,false);
+}
+
+function readFile(){
+var file = this.files[0];
+var reader = new FileReader();
+reader.readAsDataURL(file);
+reader.onload = function(e){
+    console.log(this.result);
+result.innerHTML = '<img src="'+this.result+'" alt="" height="100" />'
+}
+}
+
+</script>
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}
