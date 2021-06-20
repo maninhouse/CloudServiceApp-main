@@ -1,52 +1,99 @@
 {% extends "public/templates/public_template.html" %}
-
-{% block title %}Home{% endblock %}
-
+{% block title %}Home{%endblock %}
 {% block main %}
 
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Home</h1>
-        </div>
-    </div>
-</div>
-
-<p>{{message}}</p>
-<form action="/" method="post">
-<p>
-<label>請選擇圖片：</label>
-<input type="file" id="file_input" name="file_input" accept="image/jpeg, image/png"/>
-<button type="submit">確認</button>
-</p>
-<div id="result"></div>
-</form>
+<p id="pg_msg" style="visibility: hidden;">{{message}}</p>
 <script language="javascript">
-
-var result = document.getElementById("result");
-var input = document.getElementById("file_input");
-
-if(typeof FileReader==='undefined'){
-result.innerHTML = "Sorry, 瀏覽器不支持 FileReader";
-input.setAttribute('disabled','disabled');
-}else{
-input.addEventListener('change',readFile,false);
-}
-
-function readFile(){
-var file = this.files[0];
-var reader = new FileReader();
-reader.readAsDataURL(file);
-reader.onload = function(e){
-    console.log(this.result);
-result.innerHTML = '<img src="'+this.result+'" alt="" height="100" />'
-}
-}
-
+    var pg_msg = document.getElementById("pg_msg").textContent;
+    console.log(pg_msg);
+    if (pg_msg != "") alert('{{message}}');
+    if (pg_msg.charAt(5) == "3"){
+        if (confirm("隱藏關卡已開啟，請前往並輸入3個關卡所獲得的key")){
+            window.location.replace("/hidden_mission")
+        }
+    }
+    
 </script>
+    
+    <div container class="position-relative position-absolute top-50 start-50 translate-middle">
+        <form method="POST">
+            <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">關卡</label>
+            <select name="level_selector" id="level_selector" class="form-select" aria-label="Default select example">
+                <option selected>請選擇你的關卡</option>
+                <option value="1">第一關</option>
+                <option value="2">第二關</option>
+                <option value="3">最終關卡</option>
+            </select>
+            <div class="form-text">選擇完關卡請點擊"前往通關"，並於取得密碼後回來輸入通關密碼</div>
+            </div>
 
+            <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">通關密碼</label>
+            <input type="text" class="form-control" name="input_password" id="input_password">
+            <div class="form-text">輸入通關密碼後請點擊"送出密碼"以獲得鑰匙</div>
+            </div>
+            
+            <div class="container px-4">
+                <div class="row gx-5">
+                    <div class="col">
+                        <a id="get_mission" type="button" class="btn btn-primary" href="" target="_blank">前往通關</a>
+                    </div>
+                
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">送出密碼</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script language="javascript">
+        
+            var level = ""
+            var mission_link = "";
+            document.getElementById("level_selector").addEventListener("change", function(){
+            level = this.value;
+            switch(level){
+                case "1":
+                    mission_link = "https://ppt.cc/f13dix";
+                    break;
+                case "2":
+                    mission_link = "https://ppt.cc/fO8L6x";
+                    break;
+                case "3":
+                    mission_link = "https://ppt.cc/fPz9Ax";
+                    break;
+            }
+            document.getElementById("get_mission").href = mission_link;
+        });
+        
+    </script>
+    <!--
+    <script src="/static/js/clipboard.min.js"></script>
+    <script language="javascript">
+        document.getElementById("level_selector").addEventListener("change", function(){
+            if (this.value == "1"){
+                var level_dest = "111"
+                level_dest
+                alert("111");
+            }
+            else if (this.value == "2"){
+                alert("222");
+            }
+            else if (this.value == "3"){
+                
+            }
+            else if (this.value == "4"){
+                
+            }
+            else if (this.value == "5"){
+                
+            }
+            else if (this.value == "6"){
+                
+            }
+        });
+    </script>
+    -->
 {% endblock %}
-
-{% block script %}
-
-{% endblock %}
+{% block script %}{% endblock %}

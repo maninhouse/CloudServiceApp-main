@@ -1,0 +1,35 @@
+{% extends "public/templates/public_template.html" %}
+{% block title %}Home{%endblock %}
+{% block main %}
+
+<p id="pg_msg" style="visibility: hidden;">{{message}}</p>
+<script language="javascript">
+    var pg_msg = document.getElementById("pg_msg").textContent;
+    console.log(pg_msg);
+    if (pg_msg != "") alert('{{message}}');
+</script>
+    
+    <div container class="position-relative position-absolute top-50 start-50 translate-middle">
+        <form method="POST">
+            <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">關卡</label>
+            <select name="level_selector" id="level_selector" class="form-select" aria-label="Default select example">
+                <option selected>請選擇你的關卡</option>
+                <option value="x">隱藏關卡</option>
+            </select>
+            </div>
+
+            <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">通關密碼</label>
+            <input type="text" class="form-control" name="input_password" id="input_password">
+            <div class="form-text">輸入剛才獲得的三個key</div>
+            </div>
+ 
+            <button type="submit" class="btn btn-primary">完成探險</button>
+            
+        </form>
+    </div>
+    
+    
+{% endblock %}
+{% block script %}{% endblock %}
